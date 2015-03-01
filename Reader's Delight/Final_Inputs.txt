@@ -1,0 +1,86 @@
+create table Books
+(b_id number(5) constraint pk_b_id primary key,
+ bname varchar2(100) constraint unn_bname unique not null,
+ synopsis varchar2(2000),
+ b_price number(7,2) constraint nn_bprice not null,
+ dt_of_release date,
+ cover_pg varchar2(100) constraint nn_coverpg not null)
+
+create sequence books_seq
+
+create table Publication
+(p_id number(5)constraint pk_p_id primary key,
+ pname varchar2(75) constraint unn_pname unique not null,
+ pcountry varchar2(50) constraint nn_pcountry not null,
+ books_published number(5)
+)
+ 
+
+create sequence Publication_seq
+
+alter table Books
+ add(p_id number(5), constraint fk_p_id foreign key(p_id) references Publication)
+
+
+create table Author
+(a_id number(5) constraint pk_a_id primary key,
+ aname varchar2(50) constraint unn_aname unique not null,
+ a_country varchar2(30) constraint nn_acountry not null,
+ a_description varchar2(2000),
+ a_pic varchar2(100) constraint nn_a_pic not null,
+ books_written number(4)
+)
+
+
+create table Written_by
+(b_id number(5),
+ a_id number(5),
+ Dedication varchar2(100),
+ constraint fk_b_id foreign key(b_id) references Books,
+ constraint fk_a_id foreign key(a_id) references Author,
+ constraint pk_a_id_b_id primary key(b_id,a_id)
+)
+
+create table Critic
+(c_id number(5) constraint pk_c_id primary key,
+ cname varchar2(30) constraint unn_cname unique not null,
+ c_description varchar2(50)
+)
+
+create sequence Critic_seq
+
+
+create table Critic_Reviews
+(b_id number(5),
+ c_id number(5),
+ b_rating number(2) constraint nn_b_rating not null,
+ constraint fk_b_idc foreign key(b_id) references Books,
+ constraint fk_c_idc foreign key(c_id) references Author,
+ constraint pk_b_id_c_id primary key(b_id,c_id)) 
+
+create table Genre
+(
+g_id number(3) constraint pk_g_id primary key,
+gname varchar2(30) constraint unn_gname unique not null
+)
+
+create sequence Genre_seq
+
+
+create table Book_Category
+(b_id number(5),
+ g_id number(3),
+ constraint fk_b_idg foreign key(b_id) references Books,
+ constraint fk_g_id foreign key(g_id) references Genre,
+ constraint pk_b_id_g_id primary key(b_id,g_id)
+)
+
+
+create table Quotes
+(q_id number(3) constraint pk_q_id primary key,
+ qcontent varchar2(500) constraint nn_qcontent not null,
+ b_id number(5),
+ constraint fk_b_idq foreign key(b_id) references Books
+)
+ 
+create sequence Quotes_seq 

@@ -1,0 +1,31 @@
+//Creating table USER_ACCOUNT
+
+create table login_user
+(
+u_id number(3) constraint pk_u_id primary key,
+fullname varchar2(30) constraint nn_fullname not null,
+username varchar2(20) constraint u_nn_username unique not null,
+password varchar2(20) constraint nn_password not null,
+hint_password varchar2(40) constraint nn_hint_password not null,
+user_bdate date,
+date_of_creation date,
+user_country varchar2(20),
+user_email varchar2(1000 BYTE)
+)
+//Creating Sequence
+
+create sequence login_user_seq
+
+//Creating table AUTHOR
+
+create table author
+(
+a_id number(4) constraint pk_a_id primary key,
+a_name varchar2(30) constraint nn_a_name not null,
+a_gender varchar2(10) constraint nn_a_gender not null,
+a_country varchar2(20) constraint nn_a_country not null,
+a_description varchar2(1500),
+a_photo bfile,
+a_total_books number(3),
+constraint ck_a_gender check(lower(a_gender) in ('male','female'))
+)
